@@ -5,6 +5,8 @@ func main(){
 	var conferenceName = "Go conference" // conferenceName :="Go conference" // means the same thing and it doesn't work on the constants and variable that are explicitly 
 	var conferenceTickets = 50
 	var remainingTickets uint = 50;
+	var bookings[50]string
+
 	
 	fmt.Println("Welcome to", conferenceName,"booking application")
 	fmt.Println("We have a total of", conferenceTickets, "ticket and ", remainingTickets ,"are still available.")
@@ -43,8 +45,17 @@ func main(){
 	fmt.Println("Enter number of tickets : ")
 	fmt.Scan(&userTicketsCount)
 	remainingTickets = remainingTickets - userTicketsCount
+	bookings[0] = firstName + " "+lastName
 
+	// Array
+	fmt.Printf("The whole array: %v\n", bookings)
+	fmt.Printf("the first value: %v \n", bookings[0])
+	fmt.Printf("Array type %T \n", bookings)
+	fmt.Printf("The Array length: %v \n", len(bookings))
+	
 	fmt.Printf("Thank you %v %v for booking %v tickets, You will receive a confirmation email at %v \n", firstName, lastName, userTicketsCount, email)
 	fmt.Printf("%v tickets remaining for %v\n", remainingTickets, conferenceName)
+
+	
 
 }
