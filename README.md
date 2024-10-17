@@ -30,6 +30,7 @@ switch city {
     default:
       //  code goes here
 }
-
-
  ```
+ ## Package
+ A package is folder that keeps one or more files
+  this is how you run code from package `go run file.go. file2.go` or `go run .` dot (.) means execure all go file in current directory 
