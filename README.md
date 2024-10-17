@@ -34,3 +34,10 @@ switch city {
  ## Package
  A package is folder that keeps one or more files
   this is how you run code from package `go run file.go. file2.go` or `go run .` dot (.) means execure all go file in current directory 
+  `multiple package` export from multiple package you need to
+  1. save a file under the folder which has name similar to package name `helper/helper.go`, 
+  2. the first line of code should be package package_name you chose `package my_package_name`
+  3.  capitalize function name  and  `func MyFunction(){}`
+  4. import  by specifying module name  `module_name/packageName` i.e module name is found from `go.mod file` on the first line.
+  5. to use the function from other package type `package dot functionName` ex: helper.MyFunction()
+

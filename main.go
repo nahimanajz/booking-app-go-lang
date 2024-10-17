@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"strings"
+	"booking-app/helper"
 )
 //variable outside of all function are called PACKAGE LEVEL VARIABLES
 
@@ -23,7 +24,7 @@ func main() {
 
 		firstName, lastName, email, userTicketsCount := getUserInput()
 		// validations
-		isValidName, isValidEmail, isValidTicket := validateUserInputs(firstName, lastName, email, userTicketsCount, remainingTickets)
+		isValidName, isValidEmail, isValidTicket := helper.ValidateUserInputs(firstName, lastName, email, userTicketsCount, remainingTickets)
         
 		// conditions
 		if isValidName && isValidEmail && isValidTicket {
