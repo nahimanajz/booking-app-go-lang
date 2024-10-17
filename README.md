@@ -15,3 +15,21 @@ Syntax: var bookings = [limit]data_type{element1, element2,...elementn}
 ex: var bookings = [11]string{"joseph", "janet", "josephine", "joshua"}
 ```
 Slices uses array under the hood but it uses on array with dynamic size, that's differenciate it from array.
+## conditions, loop,
+ - switch statement
+ ``` 
+ // syntax
+  city := "London"
+switch city {
+    case "New York":
+       // logic for above value
+    case "Mexico city" ,"Alberta":
+        // logics for "Mexico city" ,"Alberta"
+    case "London", "Berlin":
+        // logics for "London" ,"Berlin"
+    default:
+      //  code goes here
+}
+
+
+ ```
