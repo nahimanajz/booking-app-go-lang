@@ -1,17 +1,19 @@
 package main
 
 import (
-	"fmt"
-	"strings"
 	"booking-app/helper"
+	"fmt"
+	"strconv"
 )
+
 //variable outside of all function are called PACKAGE LEVEL VARIABLES
 
 var conferenceName = "Go conference" // conferenceName :="Go conference" // means the same thing and it doesn't work on the constants and variable that are explicitly
 const conferenceTickets uint = 50
 var remainingTickets uint = 50
 var bookings [50]string
-var bookingSlice = []string{}
+var bookingSlice = make([]map[string]string, 0)
+
 
 
 func main() {
@@ -84,8 +86,8 @@ func greetUser() {
 func getFirstNames() []string {
 	firstNames := []string{}
 	for _, aBooking := range bookingSlice {
-		var names = strings.Fields(aBooking)
-		firstNames = append(firstNames, names[0])
+		
+		firstNames = append(firstNames,aBooking["firstName"])
 
 	}
 	return firstNames
@@ -121,8 +123,18 @@ func getUserInput() (string, string, string, uint) {
 func bookTicket(userTicketsCount uint, firstName string, lastName string, email string){
 	remainingTickets = remainingTickets - userTicketsCount
 	bookings[0] = firstName + " " + lastName
-	bookingSlice = append(bookingSlice, firstName+" "+lastName)
 
+	//creating map data structure
+	var userData = make(map[string]string)
+
+	userData["firstName"] = firstName
+	userData["lastName"] = lastName
+	userData["email"] = email
+	userData["numberOfTickets"] = strconv.FormatUint(uint64(userTicketsCount), 10)
+
+	bookingSlice = append(bookingSlice, userData)
+
+	fmt.Printf("List of booking is %v\n", bookingSlice)
 	fmt.Printf("Thank you %v %v for booking %v tickets, You will receive a confirmation email at %v \n", firstName, lastName, userTicketsCount, email)
 	fmt.Printf("%v tickets remaining for %v\n", remainingTickets, conferenceName)
 
