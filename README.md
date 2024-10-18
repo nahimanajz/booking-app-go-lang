@@ -41,4 +41,23 @@ switch city {
   4. import  by specifying module name  `module_name/packageName` i.e module name is found from `go.mod file` on the first line.
   5. to use the function from other package type `package dot functionName` ex: helper.MyFunction()
 
- 
+ ## Map
+- Syntax
+ ` var mapName = make([]map[string]string, 0) ` : 
+ - Setting value on structure
+ ` mapName["key"] = value_goes_here `
+ - Comparison to Java map it is like `myMap.put("myKey", value)`
+
+## Structure (struct) 
+- syntax 
+```
+type structure_name struct {
+    key1 data_type
+    key2 data_type
+    .
+    .
+    .
+    keyn data_type
+}
+```
+

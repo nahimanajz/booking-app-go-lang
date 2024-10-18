@@ -3,7 +3,6 @@ package main
 import (
 	"booking-app/helper"
 	"fmt"
-	"strconv"
 )
 
 //variable outside of all function are called PACKAGE LEVEL VARIABLES
@@ -12,8 +11,17 @@ var conferenceName = "Go conference" // conferenceName :="Go conference" // mean
 const conferenceTickets uint = 50
 var remainingTickets uint = 50
 var bookings [50]string
-var bookingSlice = make([]map[string]string, 0)
+var bookingSlice = make([]UserData, 0) // a slice of structure
 
+//structure: saves in ke-value pair in oder to hold values of different data-types
+// Struck can be compared to classes in Java and other OOP languages
+type UserData struct {
+	firstName string
+	lastName string
+	email string
+	numberOfTickets uint
+
+}
 
 
 func main() {
@@ -87,7 +95,7 @@ func getFirstNames() []string {
 	firstNames := []string{}
 	for _, aBooking := range bookingSlice {
 		
-		firstNames = append(firstNames,aBooking["firstName"])
+		firstNames = append(firstNames,aBooking.firstName)
 
 	}
 	return firstNames
@@ -125,12 +133,14 @@ func bookTicket(userTicketsCount uint, firstName string, lastName string, email 
 	bookings[0] = firstName + " " + lastName
 
 	//creating map data structure
-	var userData = make(map[string]string)
+	var userData = UserData {
+		firstName: firstName,
+		lastName: lastName,
+		email: email,
+		numberOfTickets: userTicketsCount,
+	}
 
-	userData["firstName"] = firstName
-	userData["lastName"] = lastName
-	userData["email"] = email
-	userData["numberOfTickets"] = strconv.FormatUint(uint64(userTicketsCount), 10)
+	
 
 	bookingSlice = append(bookingSlice, userData)
 
