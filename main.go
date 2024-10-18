@@ -40,7 +40,7 @@ func main() {
 		// conditions
 		if isValidName && isValidEmail && isValidTicket {
 			bookTicket(userTicketsCount, firstName, lastName, email)
-			sendTicket(userTicketsCount, firstName,lastName,email)
+			go sendTicket(userTicketsCount, firstName, lastName, email)
 			
 
 			// Array

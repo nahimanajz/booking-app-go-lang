@@ -60,4 +60,5 @@ type structure_name struct {
     keyn data_type
 }
 ```
-
+## go keyword
+ Imagine you have to wait for sometime to execure certain line of code whilst other part of the program should be running you use `go` keyword to accept multithreading `ex: go doStuff(){}`
