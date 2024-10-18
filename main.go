@@ -3,6 +3,7 @@ package main
 import (
 	"booking-app/helper"
 	"fmt"
+	"time"
 )
 
 //variable outside of all function are called PACKAGE LEVEL VARIABLES
@@ -39,7 +40,7 @@ func main() {
 		// conditions
 		if isValidName && isValidEmail && isValidTicket {
 			bookTicket(userTicketsCount, firstName, lastName, email)
-			
+			sendTicket(userTicketsCount, firstName,lastName,email)
 			
 
 			// Array
@@ -147,5 +148,13 @@ func bookTicket(userTicketsCount uint, firstName string, lastName string, email 
 	fmt.Printf("List of booking is %v\n", bookingSlice)
 	fmt.Printf("Thank you %v %v for booking %v tickets, You will receive a confirmation email at %v \n", firstName, lastName, userTicketsCount, email)
 	fmt.Printf("%v tickets remaining for %v\n", remainingTickets, conferenceName)
+
+}
+func sendTicket(userTickets uint, firstName string, lastName string, email string){
+	time.Sleep(10 * time.Second) // Put app to wait for 10 seconds before it sends the ticket 
+	ticket := fmt.Sprintf("%v tickets for %v %v", userTickets, firstName, lastName) //Sprintf: format strings then you console them after
+	fmt.Println("################")
+	fmt.Printf("Sending ticket:\n %v to email address %v \n", ticket, email)
+	fmt.Println("################")
 
 }
