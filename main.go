@@ -3,6 +3,7 @@ package main
 import (
 	"booking-app/helper"
 	"fmt"
+	"sync"
 	"time"
 )
 
@@ -10,77 +11,77 @@ import (
 
 var conferenceName = "Go conference" // conferenceName :="Go conference" // means the same thing and it doesn't work on the constants and variable that are explicitly
 const conferenceTickets uint = 50
+
 var remainingTickets uint = 50
 var bookings [50]string
 var bookingSlice = make([]UserData, 0) // a slice of structure
 
-//structure: saves in ke-value pair in oder to hold values of different data-types
+// structure: saves in ke-value pair in oder to hold values of different data-types
 // Struck can be compared to classes in Java and other OOP languages
 type UserData struct {
-	firstName string
-	lastName string
-	email string
+	firstName       string
+	lastName        string
+	email           string
 	numberOfTickets uint
-
 }
 
+var wg = sync.WaitGroup{}
 
 func main() {
 
 	// Another function call
 	greetUser()
-  
+
 	// using lOOP
-	for {
 
-		firstName, lastName, email, userTicketsCount := getUserInput()
-		// validations
-		isValidName, isValidEmail, isValidTicket := helper.ValidateUserInputs(firstName, lastName, email, userTicketsCount, remainingTickets)
-        
-		// conditions
-		if isValidName && isValidEmail && isValidTicket {
-			bookTicket(userTicketsCount, firstName, lastName, email)
-			go sendTicket(userTicketsCount, firstName, lastName, email)
-			
+	firstName, lastName, email, userTicketsCount := getUserInput()
+	// validations
+	isValidName, isValidEmail, isValidTicket := helper.ValidateUserInputs(firstName, lastName, email, userTicketsCount, remainingTickets)
 
-			// Array
-			fmt.Printf("The whole array: %v\n", bookings)
-			fmt.Printf("the first value: %v \n", bookings[0])
-			fmt.Printf("Array type %T \n", bookings)
-			fmt.Printf("The Array length: %v \n", len(bookings))
+	// conditions
+	if isValidName && isValidEmail && isValidTicket {
+		bookTicket(userTicketsCount, firstName, lastName, email)
+		wg.Add(1)
+		go sendTicket(userTicketsCount, firstName, lastName, email)
 
-			// Slice
-			fmt.Printf("The whole slice: %v\n", bookingSlice)
-			fmt.Printf("the first value: %v \n", bookingSlice[0])
-			fmt.Printf("Slice type %T \n", bookingSlice)
-			fmt.Printf("The Slice length: %v \n", len(bookingSlice))
+		// Array
+		fmt.Printf("The whole array: %v\n", bookings)
+		fmt.Printf("the first value: %v \n", bookings[0])
+		fmt.Printf("Array type %T \n", bookings)
+		fmt.Printf("The Array length: %v \n", len(bookings))
 
-			// call function print first names
-			firstNames := getFirstNames()
-			fmt.Printf("The first names of booking are: %v \n", firstNames)
+		// Slice
+		fmt.Printf("The whole slice: %v\n", bookingSlice)
+		fmt.Printf("the first value: %v \n", bookingSlice[0])
+		fmt.Printf("Slice type %T \n", bookingSlice)
+		fmt.Printf("The Slice length: %v \n", len(bookingSlice))
 
-			if remainingTickets == 0 {
-				fmt.Println("Our conference is sold out please come next year")
-				break
-			}
+		// call function print first names
+		firstNames := getFirstNames()
+		fmt.Printf("The first names of booking are: %v \n", firstNames)
 
-		} else if userTicketsCount == remainingTickets {
+		if remainingTickets == 0 {
+			fmt.Println("Our conference is sold out please come next year")
+			// break
+		}
 
-			fmt.Printf(" you are buying every ticket %v tickets remaining, so you can't book %v tickets \n", remainingTickets, userTicketsCount)
+	} else if userTicketsCount == remainingTickets {
 
-		} else {
+		fmt.Printf(" you are buying every ticket %v tickets remaining, so you can't book %v tickets \n", remainingTickets, userTicketsCount)
 
-			if !isValidEmail {
-				fmt.Printf("Your email are invalid")
-			} else if !isValidName {
-				fmt.Printf("Either of your names is not invalid")
-			} else if !isValidTicket {
-				fmt.Printf("Invalid number ofntickers ")
-			}
+	} else {
+
+		if !isValidEmail {
+			fmt.Printf("Your email are invalid")
+		} else if !isValidName {
+			fmt.Printf("Either of your names is not invalid")
+		} else if !isValidTicket {
+			fmt.Printf("Invalid number ofntickers ")
 		}
 	}
-
+	wg.Wait()
 }
+
 func greetUser() {
 	fmt.Println("Welcome to", conferenceName, "booking application")
 	fmt.Println("We have a total of", conferenceTickets, "ticket and ", remainingTickets, "are still available.")
@@ -95,14 +96,12 @@ func greetUser() {
 func getFirstNames() []string {
 	firstNames := []string{}
 	for _, aBooking := range bookingSlice {
-		
-		firstNames = append(firstNames,aBooking.firstName)
+
+		firstNames = append(firstNames, aBooking.firstName)
 
 	}
 	return firstNames
 }
-
-
 
 func getUserInput() (string, string, string, uint) {
 	// address
@@ -129,19 +128,17 @@ func getUserInput() (string, string, string, uint) {
 		userTicketsCount
 
 }
-func bookTicket(userTicketsCount uint, firstName string, lastName string, email string){
+func bookTicket(userTicketsCount uint, firstName string, lastName string, email string) {
 	remainingTickets = remainingTickets - userTicketsCount
 	bookings[0] = firstName + " " + lastName
 
 	//creating map data structure
-	var userData = UserData {
-		firstName: firstName,
-		lastName: lastName,
-		email: email,
+	var userData = UserData{
+		firstName:       firstName,
+		lastName:        lastName,
+		email:           email,
 		numberOfTickets: userTicketsCount,
 	}
-
-	
 
 	bookingSlice = append(bookingSlice, userData)
 
@@ -150,11 +147,11 @@ func bookTicket(userTicketsCount uint, firstName string, lastName string, email 
 	fmt.Printf("%v tickets remaining for %v\n", remainingTickets, conferenceName)
 
 }
-func sendTicket(userTickets uint, firstName string, lastName string, email string){
-	time.Sleep(10 * time.Second) // Put app to wait for 10 seconds before it sends the ticket 
+func sendTicket(userTickets uint, firstName string, lastName string, email string) {
+	time.Sleep(10 * time.Second)                                                    // Put app to wait for 10 seconds before it sends the ticket
 	ticket := fmt.Sprintf("%v tickets for %v %v", userTickets, firstName, lastName) //Sprintf: format strings then you console them after
 	fmt.Println("################")
 	fmt.Printf("Sending ticket:\n %v to email address %v \n", ticket, email)
 	fmt.Println("################")
-
+	wg.Done()
 }

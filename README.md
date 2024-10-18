@@ -60,5 +60,28 @@ type structure_name struct {
     keyn data_type
 }
 ```
-## go keyword
+## Concurrency
+
+### go keyword
  Imagine you have to wait for sometime to execure certain line of code whilst other part of the program should be running you use `go` keyword to accept multithreading `ex: go doStuff(){}`
+ #### waitgroup
+ - Suppose we have certain code to wait 
+ ```
+ var wg = sync.WaitGroup{}
+func main(){
+
+    wg.Add(1) // 1 symbolize number of below activity to wait for before terminating the execution of the application
+    go doStuff();
+    wg.Wait() // wait for doStuff() to terminate
+}
+func doStuff(){
+    time.Sleep(10 * time.Second) // Put app to wait for 10 seconds before it sends the ticket 
+    wg.Done() // mark execution termination
+}
+ ```
+ ### more description about wait group
+ - Waits for the launched goroutine to finish
+ - Package "Sync" provides the basic synchronization functionality
+ - **Add** Sets the number of goroutine to wait for (**Increase** th counter by the provider number)
+ - **Wait**: Blocks until the WaitGroup counter is O
+ - **Done: Decrements**  the waitGroup counter by 1 so this is called by the goroutine to indicate that it's finished
